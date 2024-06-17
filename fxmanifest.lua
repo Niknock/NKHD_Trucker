@@ -4,7 +4,7 @@ game 'gta5'
 author 'Niknock HD'
 description 'NKHD Trucker'
 
-version '1.0.0'
+version '1.1.0'
 
 client_scripts {
     'client.lua'
@@ -17,7 +17,8 @@ server_scripts {
 }
 
 shared_scripts {
-    '@es_extended/imports.lua'
+    '@es_extended/imports.lua',
+    'config.lua'
 }
 
 ui_page 'trucker_menu.html'

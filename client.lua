@@ -26,7 +26,11 @@ Citizen.CreateThread(function()
         if distance < 10.0 then
             DrawMarker(1, truckerPoint.x, truckerPoint.y, truckerPoint.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
             if distance < 1.5 then
-                ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um Trucker Menü zu öffnen")
+                if Config.English == false then
+                    ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um Trucker Menü zu öffnen")
+                else
+                    ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to open Trucker Menu")
+                end
                 if IsControlJustReleased(0, 38) then
                     OpenTruckerMenu()
                 end
@@ -64,43 +68,79 @@ RegisterNUICallback('selectRoute', function(data, cb)
     else
         if route == "short" then
             if xp >= 1 then
-                ShowNotification('Du leihst einen LKW aus.')
-                ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
+                if Config.English == false then
+                    ShowNotification('Du leihst einen LKW aus.')
+                    ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
+                else
+                    ShowNotification('You are renting a truck.')
+                    ShowNotification('You have selected the route ' .. route .. '.')
+                end
                 SetNuiFocus(false, false)
                 cb('ok')
                 Shortroute()
             else
-                ShowNotification('~r~Du hast nicht genügend XP')
+                if Config.English == false then
+                    ShowNotification('~r~Du hast nicht genügend XP')
+                else
+                    ShowNotification('~r~You do not have enough XP')
+                end
             end
         elseif route == "middle" then
             if xp >= 10 then
-                ShowNotification('Du leihst einen LKW aus.')
-                ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
+                if Config.English == false then
+                    ShowNotification('Du leihst einen LKW aus.')
+                    ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
+                else
+                    ShowNotification('You are renting a truck.')
+                    ShowNotification('You have selected the route ' .. route .. '.')
+                end
                 SetNuiFocus(false, false)
                 cb('ok')
                 Middleroute()
             else
-                ShowNotification('~r~Du hast nicht genügend XP')
+                if Config.English == false then
+                    ShowNotification('~r~Du hast nicht genügend XP')
+                else
+                    ShowNotification('~r~You do not have enough XP')
+                end
             end
         elseif route == "long" then
             if xp >= 80 then
-                ShowNotification('Du leihst einen LKW aus.')
-                ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
+                if Config.English == false then
+                    ShowNotification('Du leihst einen LKW aus.')
+                    ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
+                else
+                    ShowNotification('You are renting a truck.')
+                    ShowNotification('You have selected the route ' .. route .. '.')
+                end
                 SetNuiFocus(false, false)
                 cb('ok')
                 Longroute()
             else
-                ShowNotification('~r~Du hast nicht genügend XP')
+                if Config.English == false then
+                    ShowNotification('~r~Du hast nicht genügend XP')
+                else
+                    ShowNotification('~r~You do not have enough XP')
+                end
             end
         elseif route == "cayo" then
             if xp >= 150 then
-                ShowNotification('Du leihst einen LKW aus.')
-                ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
+                if Config.English == false then
+                    ShowNotification('Du leihst einen LKW aus.')
+                    ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
+                else
+                    ShowNotification('You are renting a truck.')
+                    ShowNotification('You have selected the route ' .. route .. '.')
+                end
                 SetNuiFocus(false, false)
                 cb('ok')
                 Cayoroute()
             else
-                ShowNotification('~r~Du hast nicht genügend XP')
+                if Config.English == false then
+                    ShowNotification('~r~Du hast nicht genügend XP')
+                else
+                    ShowNotification('~r~You do not have enough XP')
+                end
             end
         end
     end
@@ -144,14 +184,30 @@ function Shortroute()
                 if distance < 25.0 then
                     DrawMarker(1, shortPoint.x, shortPoint.y, shortPoint.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu beladen")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu beladen")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to load the truck")
+                        end
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Belade den Truck")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Belade den Truck")
+                            else
+                                exports['progressBars']:startUI(10000, "Loading the truck")
+                            end
                             Citizen.Wait(10000)
-                            ShowNotification('~g~Du hast den LKW Beladen.')
+                            if Config.English == false then
+                                ShowNotification('~g~Du hast den LKW Beladen.')
+                            else
+                                ShowNotification('~g~You have loaded the truck.')
+                            end
                             notloaded = false
                             Loaded = true
-                            ShowNotification('Bringe die Ladung zum Ziel.')
+                            if Config.English == false then
+                                ESX.ShowNotification("Bringe die Ladung zum Ziel.")
+                            else
+                                ESX.ShowNotification("Bring the cargo to the destination.")
+                            end
                             SetNewWaypoint(-106.7487, -2511.7678)
                         end
                     end
@@ -166,14 +222,27 @@ function Shortroute()
                 if distance < 25.0 then
                     DrawMarker(1, shortPoint2.x, shortPoint2.y, shortPoint2.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu entladen")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu entladen")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to unload the truck")
+                        end
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Entlade den Truck")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Entlade den Truck")
+                            else
+                                exports['progressBars']:startUI(10000, "Unload the truck")
+                            end                            
                             Citizen.Wait(10000)
-                            ShowNotification('~g~Du hast den LKW entladen.')
+                            if Config.English == false then
+                                ShowNotification('~g~Du hast den LKW entladen.')
+                                ShowNotification('Bringe den LKW zum Depot.')
+                            else
+                                ShowNotification('~g~You have unloaded the truck.')
+                                ShowNotification('Take the truck back to the depot.')
+                            end                            
                             Loaded = false
                             inJob = true
-                            ShowNotification('Bringe den LKW zum Depot.')
                             SetNewWaypoint(1186.4092, -3246.1897)
                         end
                     end
@@ -190,12 +259,25 @@ function Shortroute()
                 if distance < 25.0 then
                     DrawMarker(1, Depot.x, Depot.y, Depot.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zurück zu geben")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zurück zu geben")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to return the truck")
+                        end                        
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Gebe den Truck zurück.")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Gebe den Truck zurück.")
+                            else
+                                exports['progressBars']:startUI(10000, "Returning the truck.")
+                            end                            
                             Citizen.Wait(10000)
-                            ShowNotification('~b~Du hast ' ..amount.. '$ bekommen und ' ..amountxp..' Job XP')
-                            ShowNotification('~g~Du hast den LKW zurück gegeben.')
+                            if Config.English == false then
+                                ShowNotification('~b~Du hast ' ..amount.. '$ bekommen und ' ..amountxp..' Job XP')
+                                ShowNotification('~g~Du hast den LKW zurück gegeben.')
+                            else
+                                ShowNotification('~b~You received ' ..amount.. '$ and ' ..amountxp..' Job XP')
+                                ShowNotification('~g~You have returned the truck.')
+                            end                            
                             TriggerServerEvent('nkhd_trucker:pay', amount, amountxp)
                             inJob = false
                             local ped = GetPlayerPed( -1 )
@@ -207,7 +289,6 @@ function Shortroute()
                 end
         end
 end
-
 
 function Middleroute()
     local ModelHash = "pounder"
@@ -239,14 +320,30 @@ function Middleroute()
                 if distance < 25.0 then
                     DrawMarker(1, middlePoint.x, middlePoint.y, middlePoint.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu beladen")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu beladen")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to load the truck")
+                        end
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Belade den Truck")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Belade den Truck")
+                            else
+                                exports['progressBars']:startUI(10000, "Loading the truck")
+                            end
                             Citizen.Wait(10000)
-                            ShowNotification('~g~Du hast den LKW Beladen.')
+                            if Config.English == false then
+                                ShowNotification('~g~Du hast den LKW Beladen.')
+                            else
+                                ShowNotification('~g~You have loaded the truck.')
+                            end
                             notloaded = false
                             Loaded = true
-                            ShowNotification('Bringe die Ladung zum Ziel.')
+                            if Config.English == false then
+                                ESX.ShowNotification("Bringe die Ladung zum Ziel.")
+                            else
+                                ESX.ShowNotification("Bring the cargo to the destination.")
+                            end
                             SetNewWaypoint(67.5874, 122.2432)
                         end
                     end
@@ -261,14 +358,27 @@ function Middleroute()
                 if distance < 25.0 then
                     DrawMarker(1, middlePoint2.x, middlePoint2.y, middlePoint2.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu entladen")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu entladen")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to unload the truck")
+                        end
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Entlade den Truck")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Entlade den Truck")
+                            else
+                                exports['progressBars']:startUI(10000, "Unload the truck")
+                            end 
                             Citizen.Wait(10000)
-                            ShowNotification('~g~Du hast den LKW entladen.')
+                            if Config.English == false then
+                                ShowNotification('~g~Du hast den LKW entladen.')
+                                ShowNotification('Bringe den LKW zum Depot.')
+                            else
+                                ShowNotification('~g~You have unloaded the truck.')
+                                ShowNotification('Take the truck back to the depot.')
+                            end                            
                             Loaded = false
                             inJob = true
-                            ShowNotification('Bringe den LKW zum Depot.')
                             SetNewWaypoint(1186.4092, -3246.1897)
                         end
                     end
@@ -285,12 +395,25 @@ function Middleroute()
                 if distance < 25.0 then
                     DrawMarker(1, Depot.x, Depot.y, Depot.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zurück zu geben")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zurück zu geben")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to return the truck")
+                        end                        
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Gebe den Truck zurück.")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Gebe den Truck zurück.")
+                            else
+                                exports['progressBars']:startUI(10000, "Returning the truck.")
+                            end                            
                             Citizen.Wait(10000)
-                            ShowNotification('~b~Du hast ' ..amount.. '$ bekommen und ' ..amountxp..' Job XP')
-                            ShowNotification('~g~Du hast den LKW zurück gegeben.')
+                            if Config.English == false then
+                                ShowNotification('~b~Du hast ' ..amount.. '$ bekommen und ' ..amountxp..' Job XP')
+                                ShowNotification('~g~Du hast den LKW zurück gegeben.')
+                            else
+                                ShowNotification('~b~You received ' ..amount.. '$ and ' ..amountxp..' Job XP')
+                                ShowNotification('~g~You have returned the truck.')
+                            end                            
                             TriggerServerEvent('nkhd_trucker:pay', amount, amountxp)
                             inJob = false
                             local ped = GetPlayerPed( -1 )
@@ -333,14 +456,30 @@ function Longroute()
                 if distance < 25.0 then
                     DrawMarker(1, longPoint.x, longPoint.y, longPoint.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu beladen")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu beladen")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to load the truck")
+                        end
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Belade den Truck")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Belade den Truck")
+                            else
+                                exports['progressBars']:startUI(10000, "Loading the truck")
+                            end
                             Citizen.Wait(10000)
-                            ShowNotification('~g~Du hast den LKW Beladen.')
+                            if Config.English == false then
+                                ShowNotification('~g~Du hast den LKW Beladen.')
+                            else
+                                ShowNotification('~g~You have loaded the truck.')
+                            end
                             notloaded = false
                             Loaded = true
-                            ShowNotification('Bringe die Ladung zum Ziel.')
+                            if Config.English == false then
+                                ESX.ShowNotification("Bringe die Ladung zum Ziel.")
+                            else
+                                ESX.ShowNotification("Bring the cargo to the destination.")
+                            end
                             SetNewWaypoint(2737.5957, 3413.7422)
                         end
                     end
@@ -355,14 +494,27 @@ function Longroute()
                 if distance < 25.0 then
                     DrawMarker(1, longPoint2.x, longPoint2.y, longPoint2.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu entladen")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu entladen")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to unload the truck")
+                        end
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Entlade den Truck")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Entlade den Truck")
+                            else
+                                exports['progressBars']:startUI(10000, "Unload the truck")
+                            end 
                             Citizen.Wait(10000)
-                            ShowNotification('~g~Du hast den LKW entladen.')
+                            if Config.English == false then
+                                ShowNotification('~g~Du hast den LKW entladen.')
+                                ShowNotification('Bringe den LKW zum Depot.')
+                            else
+                                ShowNotification('~g~You have unloaded the truck.')
+                                ShowNotification('Take the truck back to the depot.')
+                            end                            
                             Loaded = false
                             inJob = true
-                            ShowNotification('Bringe den LKW zum Depot.')
                             SetNewWaypoint(1186.4092, -3246.1897)
                         end
                     end
@@ -379,12 +531,25 @@ function Longroute()
                 if distance < 25.0 then
                     DrawMarker(1, Depot.x, Depot.y, Depot.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zurück zu geben")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zurück zu geben")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to return the truck")
+                        end                        
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Gebe den Truck zurück.")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Gebe den Truck zurück.")
+                            else
+                                exports['progressBars']:startUI(10000, "Returning the truck.")
+                            end                            
                             Citizen.Wait(10000)
-                            ShowNotification('~b~Du hast ' ..amount.. '$ bekommen und ' ..amountxp..' Job XP')
-                            ShowNotification('~g~Du hast den LKW zurück gegeben.')
+                            if Config.English == false then
+                                ShowNotification('~b~Du hast ' ..amount.. '$ bekommen und ' ..amountxp..' Job XP')
+                                ShowNotification('~g~Du hast den LKW zurück gegeben.')
+                            else
+                                ShowNotification('~b~You received ' ..amount.. '$ and ' ..amountxp..' Job XP')
+                                ShowNotification('~g~You have returned the truck.')
+                            end                            
                             TriggerServerEvent('nkhd_trucker:pay', amount, amountxp)
                             inJob = false
                             local ped = GetPlayerPed( -1 )
@@ -427,14 +592,26 @@ function Cayoroute()
                 if distance < 25.0 then
                     DrawMarker(1, cayoPoint.x, cayoPoint.y, cayoPoint.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu beladen")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu beladen")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to load the truck")
+                        end
                         if IsControlJustReleased(0, 38) then
                             exports['progressBars']:startUI(10000, "Belade den Truck")
                             Citizen.Wait(10000)
-                            ShowNotification('~g~Du hast den LKW Beladen.')
+                            if Config.English == false then
+                                ShowNotification('~g~Du hast den LKW Beladen.')
+                            else
+                                ShowNotification('~g~You have loaded the truck.')
+                            end
                             notloaded = false
                             Loaded = true
-                            ShowNotification('Bringe die Ladung zum Ziel.')
+                            if Config.English == false then
+                                ESX.ShowNotification("Bringe die Ladung zum Ziel.")
+                            else
+                                ESX.ShowNotification("Bring the cargo to the destination.")
+                            end
                             SetNewWaypoint(4958.4546, -5728.9580)
                         end
                     end
@@ -449,14 +626,27 @@ function Cayoroute()
                 if distance < 25.0 then
                     DrawMarker(1, cayoPoint2.x, cayoPoint2.y, cayoPoint2.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu entladen")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zu entladen")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to unload the truck")
+                        end
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Entlade den Truck")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Entlade den Truck")
+                            else
+                                exports['progressBars']:startUI(10000, "Unload the truck")
+                            end 
                             Citizen.Wait(10000)
-                            ShowNotification('~g~Du hast den LKW entladen.')
+                            if Config.English == false then
+                                ShowNotification('~g~Du hast den LKW entladen.')
+                                ShowNotification('Bringe den LKW zum Depot.')
+                            else
+                                ShowNotification('~g~You have unloaded the truck.')
+                                ShowNotification('Take the truck back to the depot.')
+                            end                            
                             Loaded = false
                             inJob = true
-                            ShowNotification('Bringe den LKW zum Depot.')
                             SetNewWaypoint(1186.4092, -3246.1897)
                         end
                     end
@@ -473,12 +663,25 @@ function Cayoroute()
                 if distance < 25.0 then
                     DrawMarker(1, Depot.x, Depot.y, Depot.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
                     if distance < 4.5 then
-                        ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zurück zu geben")
+                        if Config.English == false then
+                            ESX.ShowHelpNotification("Drücke ~INPUT_CONTEXT~ um den Truck zurück zu geben")
+                        else
+                            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to return the truck")
+                        end                        
                         if IsControlJustReleased(0, 38) then
-                            exports['progressBars']:startUI(10000, "Gebe den Truck zurück.")
+                            if Config.English == false then
+                                exports['progressBars']:startUI(10000, "Gebe den Truck zurück.")
+                            else
+                                exports['progressBars']:startUI(10000, "Returning the truck.")
+                            end                            
                             Citizen.Wait(10000)
-                            ShowNotification('~b~Du hast ' ..amount.. '$ bekommen und ' ..amountxp..' Job XP')
-                            ShowNotification('~g~Du hast den LKW zurück gegeben.')
+                            if Config.English == false then
+                                ShowNotification('~b~Du hast ' ..amount.. '$ bekommen und ' ..amountxp..' Job XP')
+                                ShowNotification('~g~Du hast den LKW zurück gegeben.')
+                            else
+                                ShowNotification('~b~You received ' ..amount.. '$ and ' ..amountxp..' Job XP')
+                                ShowNotification('~g~You have returned the truck.')
+                            end                            
                             TriggerServerEvent('nkhd_trucker:pay', amount, amountxp)
                             inJob = false
                             local ped = GetPlayerPed( -1 )
