@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trucker Job</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            display: none; /* Anfangs versteckt */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .menu {
+            background-color: #1c1c1c;
+            padding: 20px;
+            border-radius: 10px;
+            width: 800px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .menu h2 {
+            margin: 0 0 20px;
+            text-align: center;
+        }
+        .menu p {
+            margin: 5px 0;
+            text-align: center;
+        }
+        .menu table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .menu table, th, td {
+            border: 1px solid #444;
+        }
+        .menu th, .menu td {
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+        }
+        .menu th {
+            background-color: #333;
+        }
+        .menu tr:hover, .menu tr.selected {
+            background-color: #555;
+        }
+        .submenu {
+            margin-top: 20px;
+        }
+        .submenu button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            cursor: pointer;
+        }
+        .submenu button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <h2>LA Logistic</h2>
+        <p>Deine Erfahrung: <span id="xp">1XP</span></p>
+        <table id="routes">
+            <thead>
+                <tr>
+                    <th>ROUTE</th>
+                    <th>BENÖTIGTE ERFAHRUNG</th>
+                    <th>BELOHNUNG (GELD)</th>
+                    <th>BELOHNUNG (XP)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-route="short">
+                    <td>Short Route</td>
+                    <td>1XP</td>
+                    <td>5000$</td>
+                    <td>1</td>
+                </tr>
+                <tr data-route="middle">
+                    <td>Middle Route</td>
+                    <td>10XP</td>
+                    <td>10000$</td>
+                    <td>2</td>
+                </tr>
+                <tr data-route="long">
+                    <td>Long Route</td>
+                    <td>80XP</td>
+                    <td>25000$</td>
+                    <td>4</td>
+                </tr>
+                <tr data-route="cayo">
+                    <td>Cayo Perico</td>
+                    <td>150XP</td>
+                    <td>27500$</td>
+                    <td>8</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="submenu" id="truckOptions" style="display:none;">
+            <p>LKW Auswahl</p>
+            <button onclick="borrowTruck()">LKW ausleihen</button>
+        </div>
+        <div class="submenu" id="truckOptions">
+        <button onclick="closeMenu()">Schließen</button>
+        </div>
+    </div>
+    <script>
+        let selectedRoute = '';
+
+        document.querySelectorAll('#routes tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                document.querySelectorAll('#routes tbody tr').forEach(r => r.classList.remove('selected'));
+                row.classList.add('selected');
+                selectedRoute = row.getAttribute('data-route');
+                document.getElementById('truckOptions').style.display = 'block';
+            });
+        });
+
+        window.addEventListener('message', function(event) {
+            if (event.data.type === "openTruckerMenu") {
+                document.getElementById('xp').innerText = event.data.xp + "XP";
+                document.body.style.display = "flex";
+            }
+        });
+
+        function useOwnTruck() {
+            selectRoute(true);
+        }
+
+        function borrowTruck() {
+            selectRoute(false);
+        }
+
+        function selectRoute(useOwnTruck) {
+            fetch(`https://${GetParentResourceName()}/selectRoute`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify({
+                    route: selectedRoute,
+                    useOwnTruck: useOwnTruck
+                })
+            }).then(resp => resp.json()).then(resp => {
+                document.body.style.display = "none";
+            });
+        }
+
+        function closeMenu() {
+            fetch(`https://${GetParentResourceName()}/close`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify({})
+            }).then(resp => resp.json()).then(resp => {
+                document.body.style.display = "none";
+            });
+        }
+    </script>
+</body>
+</html>
