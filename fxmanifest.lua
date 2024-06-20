@@ -4,7 +4,7 @@ game 'gta5'
 author 'Niknock HD'
 description 'NKHD Trucker'
 
-version '1.1.0'
+version '1.1.5'
 
 client_scripts {
     'client.lua'
