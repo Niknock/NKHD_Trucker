@@ -67,7 +67,7 @@ RegisterNUICallback('selectRoute', function(data, cb)
         ShowNotification('Du benutzt deinen eigenen LKW.')
     else
         if route == "short" then
-            if xp >= 1 then
+            if xp >= Config.ShortRouteXPneeded then
                 if Config.English == false then
                     ShowNotification('Du leihst einen LKW aus.')
                     ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
@@ -86,7 +86,7 @@ RegisterNUICallback('selectRoute', function(data, cb)
                 end
             end
         elseif route == "middle" then
-            if xp >= 10 then
+            if xp >= Config.MiddleRouteXPneeded then
                 if Config.English == false then
                     ShowNotification('Du leihst einen LKW aus.')
                     ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
@@ -105,7 +105,7 @@ RegisterNUICallback('selectRoute', function(data, cb)
                 end
             end
         elseif route == "long" then
-            if xp >= 80 then
+            if xp >= Config.LongRouteXPneeded then
                 if Config.English == false then
                     ShowNotification('Du leihst einen LKW aus.')
                     ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
@@ -124,7 +124,7 @@ RegisterNUICallback('selectRoute', function(data, cb)
                 end
             end
         elseif route == "cayo" then
-            if xp >= 150 then
+            if xp >= Config.CayoRouteXPneeded then
                 if Config.English == false then
                     ShowNotification('Du leihst einen LKW aus.')
                     ShowNotification('Du hast die Route ' .. route .. ' ausgewählt.')
@@ -253,8 +253,8 @@ function Shortroute()
             Citizen.Wait(0)
             local playerCoords = GetEntityCoords(PlayerPedId())
             local distance = GetDistanceBetweenCoords(playerCoords, Depot, true)
-            local amount = 5000
-            local amountxp = 1
+            local amount = Config.MoneyShort
+            local amountxp = Config.XPShort
             
                 if distance < 25.0 then
                     DrawMarker(1, Depot.x, Depot.y, Depot.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
@@ -389,8 +389,8 @@ function Middleroute()
             Citizen.Wait(0)
             local playerCoords = GetEntityCoords(PlayerPedId())
             local distance = GetDistanceBetweenCoords(playerCoords, Depot, true)
-            local amount = 10000
-            local amountxp = 2
+            local amount = Config.MoneyMiddle
+            local amountxp = Config.XPMiddle
             
                 if distance < 25.0 then
                     DrawMarker(1, Depot.x, Depot.y, Depot.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
@@ -525,8 +525,8 @@ function Longroute()
             Citizen.Wait(0)
             local playerCoords = GetEntityCoords(PlayerPedId())
             local distance = GetDistanceBetweenCoords(playerCoords, Depot, true)
-            local amount = 25000
-            local amountxp = 4
+            local amount = Config.MoneyLong
+            local amountxp = Config.XPLong
             
                 if distance < 25.0 then
                     DrawMarker(1, Depot.x, Depot.y, Depot.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
@@ -657,8 +657,8 @@ function Cayoroute()
             Citizen.Wait(0)
             local playerCoords = GetEntityCoords(PlayerPedId())
             local distance = GetDistanceBetweenCoords(playerCoords, Depot, true)
-            local amount = 27500
-            local amountxp = 8
+            local amount = Config.MoneyCayo
+            local amountxp = Config.XPCayo
             
                 if distance < 25.0 then
                     DrawMarker(1, Depot.x, Depot.y, Depot.z - 1.0, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 150, false, true, 2, nil, nil, false)
